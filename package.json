@@ -1,0 +1,20 @@
+{
+	"name": "open-frameify",
+	"version": "1.0.0",
+	"description": "Create website mockups",
+	"author": "Stallion Studios",
+	"license": "GPL-3.0",
+	"type": "module",
+	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/StallionStudios/frameify-open.git"
+	},
+	"scripts": {
+		"test": "node index.js 'https://www.google.com/'"
+	},
+	"dependencies": {
+		"puppeteer": "^22.0.0",
+		"sharp": "^0.33.2"
+	}
+}
