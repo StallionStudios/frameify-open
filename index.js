@@ -25,9 +25,29 @@ async function screenshot(url) {
 	const iPadFrame = "./frames/ipad-frame.png";
 	const iMacFrame = "./frames/imac-frame.png";
 
-	// iPhone
-	await page.emulate(iPhone);
+	// iMac
+	console.log(" ");
+	console.log("emulating iMac...");
+	await page.setViewport({ width: 1920, height: 1080 });
+
+	console.log("opening webpage...");
 	await page.goto(url, { waitUntil: "networkidle0", timeout: 60000 });
+
+	console.log("taking screenshot...");
+	const iMacScreenshotPath = `screenshots/${formattedUrl}_${formattedDate}_imac.png`;
+	await page.screenshot({ path: iMacScreenshotPath });
+	await overlayMacFrame(iMacScreenshotPath, iMacFrame, `device-screenshots/${formattedUrl}_${formattedDate}_imac.png`, 2072, 1641, 207);
+
+	output.imac = `device-screenshots/${formattedUrl}_${formattedDate}_imac.png`;
+
+	// iPhone
+	console.log("emulating iPhone...");
+	await page.emulate(iPhone);
+
+	console.log("opening webpage...");
+	await page.goto(url, { waitUntil: "networkidle0", timeout: 60000 });
+
+	console.log("taking screenshot...");
 	const iPhoneScreenshotPath = `screenshots/${formattedUrl}_${formattedDate}_iphone.png`;
 	await page.screenshot({ path: iPhoneScreenshotPath });
 	await overlayDeviceFrame(iPhoneScreenshotPath, iPhoneFrame, `device-screenshots/${formattedUrl}_${formattedDate}_iphone.png`, 1296, 2591);
@@ -35,22 +55,19 @@ async function screenshot(url) {
 	output.iphone = `device-screenshots/${formattedUrl}_${formattedDate}_iphone.png`;
 
 	// iPad
+	console.log(" ");
+	console.log("emulating iPad...");
 	await page.emulate(iPad);
+
+	console.log("opening webpage...");
 	await page.goto(url, { waitUntil: "networkidle0", timeout: 60000 });
+
+	console.log("taking screenshot...");
 	const iPadScreenshotPath = `screenshots/${formattedUrl}_${formattedDate}_ipad.png`;
 	await page.screenshot({ path: iPadScreenshotPath });
 	await overlayDeviceFrame(iPadScreenshotPath, iPadFrame, `device-screenshots/${formattedUrl}_${formattedDate}_ipad.png`, 1750, 2504);
 
 	output.ipad = `device-screenshots/${formattedUrl}_${formattedDate}_ipad.png`;
-
-	// iMac
-	await page.setViewport({ width: 1920, height: 1080 });
-	await page.goto(url, { waitUntil: "networkidle0", timeout: 60000 });
-	const iMacScreenshotPath = `screenshots/${formattedUrl}_${formattedDate}_imac.png`;
-	await page.screenshot({ path: iMacScreenshotPath });
-	await overlayMacFrame(iMacScreenshotPath, iMacFrame, `device-screenshots/${formattedUrl}_${formattedDate}_imac.png`, 2072, 1641, 207);
-
-	output.imac = `device-screenshots/${formattedUrl}_${formattedDate}_imac.png`;
 
 	await browser.close();
 
